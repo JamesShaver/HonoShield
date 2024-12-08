@@ -20,23 +20,19 @@
     },
     "kv_namespaces": [
         {
-            "binding": "REMEMBER_TOKENS",
-            "id": "3edab0d4afd347fc9f8f825fb3dd8b9a"
+            "binding": "SESSIONS",
+            "id": "de497b3fe6a74885b687a6d3056a8ee6"
         },
         {
-            "binding": "KV_SESSIONS",
-            "id": "89d850fee88644acb67350dcad6f6890"
-        },
-        {
-            "binding": "KV_CSRF",
-            "id": "fa231dad2c8b440da0232225c094ed30"
+            "binding": "REMEMBER",
+            "id": "b2f3b52f0fed49bb8717bcf393efbbab"
         }
     ],
     "d1_databases": [
         {
             "binding": "DB",
             "database_name": "users",
-            "database_id": "be1963a0-d722-42be-a963-62f66b65b7ad"
+            "database_id": "555429be-61ea-4eb9-9569-c5b40306c584"
         }
     ],
     "assets": {
