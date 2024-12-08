@@ -1,0 +1,27 @@
+{
+  "name": "honoshield",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie": "^1.0.1",
+    "hono": "^4.6.8",
+    "hono-sessions": "^0.7.0",
+    "nanoid": "^5.0.8",
+    "uuid": "^11.0.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241022.0",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3",
+    "css-loader": "^7.1.2",
+    "mini-css-extract-plugin": "^2.9.2",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "wrangler": "^3.83.0"
+  }
+}

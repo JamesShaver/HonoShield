@@ -1,0 +1,98 @@
+html,
+body {
+  height: 100%;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 1rem;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+
+#authentication {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+}
+
+#authentication .form-left {
+  padding: 20px 40px;
+  position: relative;
+  width: 100%;
+  color: #fff;
+}
+
+
+#authentication .form-right {
+  padding: 20px 40px;
+  position: relative;
+  width: 100%;
+}
+
+#authentication .option {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 12px;
+  /* font-size: 0.95rem; */
+  /* font-weight: 900; */
+  cursor: pointer;
+  user-select: none;
+}
+
+#authentication .option input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+#authentication .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 2px;
+}
+
+#authentication .option:hover input ~ .checkmark {
+  background-color: #f1f1f1;
+}
+
+#authentication .option input:checked ~ .checkmark {
+  border: 2px solid #e5e5e5;
+  background-color: #fff;
+  transition: 300ms ease-in-out all;
+}
+
+#authentication .checkmark:after {
+  content: "\2713";
+  position: absolute;
+  display: none;
+  color: #3786bd;
+  font-size: 1rem;
+}
+
+#authentication .option input:checked ~ .checkmark:after {
+  display: block;
+}
+
+#authentication .option .checkmark:after {
+  left: 2px;
+  top: -4px;
+  width: 5px;
+  height: 10px;
+}
+
+
+#authentication a {
+  text-decoration: none;
+}

@@ -1,0 +1,49 @@
+{
+    "name": "honoshield",
+    "main": "src/index.js",
+    "compatibility_flags": [
+        "nodejs_compat"
+    ],
+    "compatibility_date": "2024-11-22",
+    "vars": {
+        "MAIL": {
+            "MAILGUN_DOMAIN": "mg.honoshield.cdndev.io",
+            "FROM": "no-reply <no-reply@honoshield.cdndev.io>",
+            "SUBJECT": "User Activation"
+        },
+        "CSRF": {
+            "EXPIRY": 300
+        },
+        "SESSION": {
+            "EXPIRY": 3600
+        }
+    },
+    "kv_namespaces": [
+        {
+            "binding": "REMEMBER_TOKENS",
+            "id": "3edab0d4afd347fc9f8f825fb3dd8b9a"
+        },
+        {
+            "binding": "KV_SESSIONS",
+            "id": "89d850fee88644acb67350dcad6f6890"
+        },
+        {
+            "binding": "KV_CSRF",
+            "id": "fa231dad2c8b440da0232225c094ed30"
+        }
+    ],
+    "d1_databases": [
+        {
+            "binding": "DB",
+            "database_name": "users",
+            "database_id": "be1963a0-d722-42be-a963-62f66b65b7ad"
+        }
+    ],
+    "assets": {
+        "directory": "public"
+    },
+    "observability": {
+        "enabled": true,
+        "head_sampling_rate": 1
+    }
+}
