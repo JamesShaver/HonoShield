@@ -53,7 +53,7 @@ export const tosPage = () => `
     <h4>10. Termination</h4>
     <p>We reserve the right to terminate or suspend your account for violating these Terms or engaging in prohibited activities.</p>
     <h4>12. Contact Us</h4>
-    <p>If you have any questions, concerns, or feedback, please contact us at:<br> <a href="https://github.com/billthecat/honoshield" class="fw-bold">GitHub HonoShield</a></p>
+    <p>If you have any questions, concerns, or feedback, please contact us at:<br> <a href="https://github.com/JamesShaver/HonoShield" class="fw-bold">GitHub HonoShield</a></p>
     <p>Effective Date: 11/23/2024</p>
 </div>
 `;
