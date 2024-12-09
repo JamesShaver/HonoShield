@@ -20,11 +20,15 @@
     },
     "kv_namespaces": [
         {
-            "binding": "SESSIONS",
+            "binding": "KV_CSRF",
+            "id": "b22789ebdb91492faf50048013ab3a71"
+        },
+        {
+            "binding": "KV_SESSIONS",
             "id": "de497b3fe6a74885b687a6d3056a8ee6"
         },
         {
-            "binding": "REMEMBER",
+            "binding": "REMEMBER_TOKENS",
             "id": "b2f3b52f0fed49bb8717bcf393efbbab"
         }
     ],

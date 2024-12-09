@@ -16,7 +16,7 @@ export const contactPage = () => `
             </svg>
           </div>
           <div class="flex-grow-1 ms-3">
-            <p>Visit our GitHub repository here: <a href="https://github.com/YourRepositoryName" target="_blank">GitHub Repository</a></p>
+            <p>Visit our GitHub repository here: <a href="https://github.com/JamesShaver/HonoShield" target="_blank">GitHub Repository</a></p>
                 <p>We appreciate your feedback and contributions to make our project better!</p>
           </div>
         </div>
