@@ -65,7 +65,7 @@ updated_on datetime default current_timestamp
 ## Installation and Setup
 
  1.  **Clone the Repository**:
-`git clone https://github.com/yourusername/hono-web-app.git`
+`git clone https://github.com/JamesShaver/HonoShield.git`
 `cd hono-web-app`
 
  2. **Install Dependencies**:

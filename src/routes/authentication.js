@@ -135,12 +135,35 @@ authRoutes.post('/api/login', async (c) => {
     const session = { userId, username: userRecord.username };
     await c.env.KV_SESSIONS.put(sessionId, JSON.stringify(session), { expirationTtl: c.env.SESSION.EXPIRY });
 
-    setCookie(c, 'session_id', sessionId, { maxAge: 3600, httpOnly: true, secure: true, sameSite: 'Lax' });
+    try {
+        setCookie(c, 'session_id', sessionId, {
+          maxAge: 3600,
+          httpOnly: true,
+          secure: true,
+          sameSite: 'Lax',
+        });
+        console.log('Cookie set successfully');
+      } catch (error) {
+        console.error('Error setting cookie:', error);
+        return c.json({ message: 'Failed to set cookie' }, 500);
+      }
 
     if (rememberMe === 'on') {
         const rememberToken = generateToken();
         await c.env.REMEMBER_TOKENS.put(`remember_${rememberToken}`, userId, { expirationTtl: 30 * 24 * c.env.SESSION.EXPIRY });
-        setCookie(c, 'remember_me', rememberToken, { maxAge: 30 * 24 * c.env.SESSION.EXPIRY, httpOnly: true, secure: true, sameSite: 'Lax' });
+
+        try {
+            setCookie(c, 'remember_me', rememberToken, {
+              maxAge: 30 * 24 * c.env.SESSION.EXPIRY,
+              httpOnly: true,
+              secure: true,
+              sameSite: 'Lax',
+            });
+            console.log('Remember Cookie set successfully');
+          } catch (error) {
+            console.error('Error setting remember cookie:', error);
+            return c.json({ message: 'Failed to set remember cookie' }, 500);
+          }
     }
 
     c.set('username', userRecord.username);
