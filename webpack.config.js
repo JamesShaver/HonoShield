@@ -1,18 +1,26 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.js', // Entry point for your app
   output: {
-    filename: 'worker.js',
-    path: __dirname + '/dist',
+    filename: 'worker.js', // Output file for Cloudflare Worker
+    path: path.resolve(__dirname, 'dist'),
+    libraryTarget: 'commonjs2', // Cloudflare Workers require this format
   },
+  target: 'webworker', // Specify Worker environment
+  externals: [nodeExternals()], // Exclude Node.js modules from bundle
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.css$/, // Handle CSS files
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf|svg)$/, // Handle fonts and images
+        use: ['file-loader'],
       },
     ],
   },
-  plugins: [new MiniCssExtractPlugin({ filename: 'styles.css' })],
+  mode: 'production', // Optimize for production
 };

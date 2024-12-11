@@ -30,10 +30,6 @@ const authRequired = async (c, next) => {
 profileRoutes.use('/*', authRequired);
 
 profileRoutes.get('/dashboard', async (c) => {
-    const username = c.get('username') || null;
-
-    const loggedIn = getLoggedInHeader(username);
-    const title = 'Profile';
 
     let userRecord;
     try {
@@ -45,22 +41,20 @@ profileRoutes.get('/dashboard', async (c) => {
         return c.json({ message: 'Database error' }, 500);
     }
 
-
     const { dashboardPage, javaScript } = await import('../pages/profile/dashboard');
-    const content = dashboardPage(userRecord);
     const nonce = c.get('secureHeadersNonce');
-    const javascript = javaScript(nonce);
 
-    return c.html(layout(title, content, loggedIn, javascript));
+    let content = {
+        title: 'Profile',
+        username: c.get('username'),
+        page: dashboardPage(userRecord),
+        javascript: javaScript(nonce)
+    }
+    return c.html(layout(content));
 });
 
 profileRoutes.get('/settings', async (c) => {
-    const csrfToken = await getOrCreateCSRFToken(c);
-
-    const username = c.get('username') || null;
-
-    const loggedIn = getLoggedInHeader(username);
-    const title = 'Settings';
+    const csrfToken = getOrCreateCSRFToken(c);
 
     let userRecord;
     try {
@@ -73,11 +67,14 @@ profileRoutes.get('/settings', async (c) => {
     }
 
     const { settingsPage, javaScript } = await import('../pages/profile/settings');
-    const content = settingsPage(userRecord);
     const nonce = c.get('secureHeadersNonce');
-    const javascript = javaScript(csrfToken, nonce);
-
-    return c.html(layout(title, content, loggedIn, javascript));
+    let content = {
+        title: 'Settings',
+        username: c.get('username'),
+        page: settingsPage(userRecord),
+        javascript: javaScript(csrfToken, nonce)
+    }
+    return c.html(layout(content));
 });
 
 

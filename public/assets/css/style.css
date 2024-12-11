@@ -63,11 +63,11 @@ body {
   border-radius: 2px;
 }
 
-#authentication .option:hover input ~ .checkmark {
+#authentication .option:hover input~.checkmark {
   background-color: #f1f1f1;
 }
 
-#authentication .option input:checked ~ .checkmark {
+#authentication .option input:checked~.checkmark {
   border: 2px solid #e5e5e5;
   background-color: #fff;
   transition: 300ms ease-in-out all;
@@ -81,7 +81,7 @@ body {
   font-size: 1rem;
 }
 
-#authentication .option input:checked ~ .checkmark:after {
+#authentication .option input:checked~.checkmark:after {
   display: block;
 }
 
@@ -95,4 +95,29 @@ body {
 
 #authentication a {
   text-decoration: none;
+}
+
+
+@media (max-width: 576px) {
+  .border-xs {
+    border: 1px solid;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .border-sm {
+    border: 2px solid;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  .border-md {
+    border: 3px solid;
+  }
+}
+
+@media (min-width: 993px) {
+  .border-lg {
+    border: 4px solid;
+  }
 }

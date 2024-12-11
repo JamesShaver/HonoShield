@@ -49,15 +49,21 @@ app.use('*', async (c, next) => {
 });
 
 
+
 // Use imported route groups
 app.route('/profile', profileRoutes);
 app.route('/auth', authRoutes);
 app.route('/', publicRoutes);
 
 app.notFound((c) => {
-    const username = c.get('username') || null;
-    const loggedIn = getLoggedInHeader(username);
-    return c.html(layout('Error', error404Page(), loggedIn), 404);
+
+    let content = {
+        title: 'Page Not Found',
+        username: c.get('username') ?? null,
+        page: error404Page(),
+        javascript: ''
+    }
+    return c.html(layout(content), 404);
 });
 
 export default {

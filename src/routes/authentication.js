@@ -32,45 +32,44 @@ async function validateCSRF(c, csrfToken) {
 
 // Login Route
 authRoutes.get('/login', async (c) => {
-    const csrfToken = await getOrCreateCSRFToken(c);
+    if(c.get('username') != null) c.redirect('/auth/logout');
 
-    const username = c.get('username') || null;
-    const loggedIn = getLoggedInHeader(username);
-
-    const title = 'Login';
+    const csrfToken = getOrCreateCSRFToken(c);
     const { loginPage, javaScript } = await import('../pages/authentication/login');
-    const content = loginPage(csrfToken);
-    const nonce = c.get('secureHeadersNonce');
-    const javascript = javaScript(csrfToken, nonce);
-    return c.html(layout(title, content, loggedIn, javascript));
+
+    const nonce=c.get('secureHeadersNonce');
+    let content = {
+        title: 'Login',
+        page: loginPage(),
+        javascript: javaScript(csrfToken, nonce)
+    }
+    return c.html(layout(content));
 });
 
 authRoutes.get('/register', async (c) => {
-    const csrfToken = await getOrCreateCSRFToken(c);
+    if(c.get('username') != null) c.redirect('/auth/logout');
 
-    const username = c.get('username') || null;
-
-    const loggedIn = getLoggedInHeader(username);
-
-    const title = 'Register';
+    const csrfToken = getOrCreateCSRFToken(c);
     const { registerPage, javaScript } = await import('../pages/authentication/register');
-    const content = registerPage(csrfToken);
-    const nonce = c.get('secureHeadersNonce');
-    const javascript = javaScript(csrfToken, nonce);
-    return c.html(layout(title, content, loggedIn, javascript));
+    const nonce=c.get('secureHeadersNonce');
+    let content = {
+        title: 'Register',
+        page: registerPage(),
+        javascript: javaScript(csrfToken, nonce)
+    }
+    return c.html(layout(content));
 });
 
 authRoutes.get("/activate-user", async (c) => {
-    const csrfToken = await getOrCreateCSRFToken(c);
-    const username = c.get('username') || null;
-    const loggedIn = getLoggedInHeader(username);
+    const csrfToken = getOrCreateCSRFToken(c);
 
-    const title = 'Activate Account';
     const { activatePage, javaScript } = await import('../pages/authentication/activate');
-    const content = activatePage();
-    const nonce = c.get('secureHeadersNonce');
-    const javascript = javaScript(csrfToken, nonce);
-    return c.html(layout(title, content, loggedIn, javascript));
+    let content = {
+        title: 'Activate Account',
+        page: activatePage(),
+        javascript: javaScript(csrfToken, nonce)
+    }
+    return c.html(layout(content));
 });
 
 

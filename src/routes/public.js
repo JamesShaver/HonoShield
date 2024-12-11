@@ -14,7 +14,7 @@ publicRoutes.use('*', async (c, next) => {
     if (sessionId) {
         try {
             session = c.env.KV_SESSIONS && sessionId ? await c.env.KV_SESSIONS.get(sessionId) : null;
-            if(session != null) {
+            if (session != null) {
                 c.set('username', JSON.parse(session).username);
             } else {
                 c.set('username', null)
@@ -30,44 +30,43 @@ publicRoutes.use('*', async (c, next) => {
 
 // Home
 publicRoutes.get('/', async (c) => {
-    const username = c.get('username') || null;
 
-    const loggedIn = getLoggedInHeader(username);
-
-
-    const title = 'Home';
     const { homePage, javaScript } = await import('../pages/home');
-    const content = homePage();
     const nonce=c.get('secureHeadersNonce');
-    const javascript = javaScript(nonce);    
-    return c.html(layout(title, content, loggedIn, javascript));
+    let content = {
+        title: 'Home',
+        username: c.get('username') ?? null,
+        page: homePage(),
+        javascript: javaScript(nonce)
+    }
+    return c.html(layout(content));
 });
 
 //Contact
 publicRoutes.get('/contact', async (c) => {
-    const username = c.get('username') || null;
-    const loggedIn = getLoggedInHeader(username);
 
-    const title = 'Contact Us';
     const { contactPage, javaScript } = await import('../pages/contact');
-    const content = contactPage();
-    const nonce=c.get('secureHeadersNonce');
-    const javascript = javaScript(nonce);
-    return c.html(layout(title, content, loggedIn, javascript));
+    const nonce = c.get('secureHeadersNonce');
+    let content = {
+        title: 'Contact Us',
+        username: c.get('username') ?? null,
+        page: contactPage(),
+        javascript: javaScript(nonce)
+    }
+    return c.html(layout(content));
 });
 
 
 // TOS
 publicRoutes.get('/tos', async (c) => {
-    const username = c.get('username') || null;
 
-    const loggedIn = getLoggedInHeader(username);
-
-
-    const title = 'Home';
     const { tosPage } = await import('../pages/tos');
-    const content = tosPage();
-    return c.html(layout(title, content, loggedIn));
+    let content = {
+        title: 'Home',
+        username: c.get('username')  ?? null,
+        page: tosPage()
+    }
+    return c.html(layout(content));
 });
 
 
