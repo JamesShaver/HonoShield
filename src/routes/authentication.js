@@ -80,12 +80,12 @@ authRoutes.get('/logout', async (c) => {
 
     if (sessionId && c.env.KV_SESSIONS) {
         await c.env.KV_SESSIONS.delete(sessionId);
-        setCookie(c, 'session_id', '', { maxAge: 0, path: '/' });
+        await setCookie(c, 'session_id', '', { maxAge: 0, path: '/' });
     }
 
     if (rememberMeToken && c.env.REMEMBER_TOKENS) {
         await c.env.REMEMBER_TOKENS.delete(`remember_${rememberMeToken}`);
-        setCookie(c, 'remember_me', '', { maxAge: 0, path: '/' });
+        await setCookie(c, 'remember_me', '', { maxAge: 0, path: '/' });
     }
     return c.redirect('/');
 });
@@ -135,7 +135,7 @@ authRoutes.post('/api/login', async (c) => {
     await c.env.KV_SESSIONS.put(sessionId, JSON.stringify(session), { expirationTtl: c.env.SESSION.EXPIRY });
 
     try {
-        setCookie(c, 'session_id', sessionId, {
+        await setCookie(c, 'session_id', sessionId, {
           maxAge: 3600,
           httpOnly: true,
           secure: true,
@@ -152,7 +152,7 @@ authRoutes.post('/api/login', async (c) => {
         await c.env.REMEMBER_TOKENS.put(`remember_${rememberToken}`, userId, { expirationTtl: 30 * 24 * c.env.SESSION.EXPIRY });
 
         try {
-            setCookie(c, 'remember_me', rememberToken, {
+            await setCookie(c, 'remember_me', rememberToken, {
               maxAge: 30 * 24 * c.env.SESSION.EXPIRY,
               httpOnly: true,
               secure: true,
