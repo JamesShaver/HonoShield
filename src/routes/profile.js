@@ -56,6 +56,8 @@ profileRoutes.get('/dashboard', async (c) => {
 });
 
 profileRoutes.get('/settings', async (c) => {
+    let username = c.get('username');
+
     const csrfToken = getOrCreateCSRFToken(c);
 
     let userRecord;
