@@ -1,44 +1,47 @@
 export const registerPage = (csrfToken) => `
-  <div id="authentication" class="container mt-5">
-      <div class="form-left bg-primary border rounded-start">
+  <div id="authentication" class="container p-5">
+  <div class="row">
+    <div class="col-12 col-md-6 bg-primary text-white border rounded-start p-3">
+        
         <h4 class="text-uppercase">Account Registration</h4>
         <p>Registering a user account on our site comes with several benefits, including easy access to your account information, exclusive promotions and discounts, a faster checkout process, and a personalized experience.</p>
         <p class="pb-5">If you want a more convenient and personalized experience, as well as access to exclusive discounts and promotions, register a user account with us today!</p>
 
-        <a href="#" type="button" class="btn btn-sm btn-light">Have an Account?</a>
+        <a href="/auth/login" type="button" class="btn btn-sm btn-light">Have an Account?</a>
 
-      </div>
-      <form class="form-right border rounded-end" id="registerForm">
+    </div>
+    <div class="col bg-white border border-start-0 rounded-end p-3">
+      <form id="registerForm">
         <div class="row">
           <div class="col-sm-6 mb-3">
             <div class="form-floating">
-              <input type="text" class="form-control" autocomplete="given-name" id="firstName" placeholder="First Name" required>
+              <input type="text" class="form-control" autocomplete="given-name" id="firstName" placeholder="First Name" required="">
               <label for="firstName">First Name</label>
             </div>
           </div>
           <div class="col-sm-6 mb-3">
             <div class="form-floating">
-              <input type="text" class="form-control" autocomplete="family-name" id="lastName" placeholder="Last Name" required>
+              <input type="text" class="form-control" autocomplete="family-name" id="lastName" placeholder="Last Name" required="">
               <label for="firstName">Last Name</label>
             </div>
           </div>
         </div>
         <div class="mb-3">
           <div class="form-floating">
-            <input type="text" class="form-control" autocomplete="organization-name" id="company" placeholder="company" required>
+            <input type="text" class="form-control" autocomplete="organization-name" id="company" placeholder="company" required="">
             <label for="company">Company</label>
           </div>
         </div>
         <div class="mb-3">
           <div class="form-floating">
-            <input type="email" class="form-control" autocomplete="username" id="email" placeholder="name@website.com" required>
+            <input type="email" class="form-control" autocomplete="username" id="email" placeholder="name@website.com" required="">
             <label for="email">Email Address</label>
           </div>
         </div><div class="row">
           <div class="col-sm-6 mb-3">
             <div class="input-group">  
               <div class="form-floating">
-                <input type="password" class="form-control" autocomplete="current-password" id="password" placeholder="Password" required>
+                <input type="password" class="form-control" autocomplete="current-password" id="password" placeholder="Password" required="">
                 <label for="password">Password</label>
               </div>
                 <button type="button" class="input-group-text" id="showPass"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
@@ -50,7 +53,7 @@ export const registerPage = (csrfToken) => `
           <div class="col-sm-6 mb-3">
             <div class="input-group">  
             <div class="form-floating">
-              <input type="password" class="form-control" autocomplete="current-password" id="confirmPassword" placeholder="Confirm Password" required>
+              <input type="password" class="form-control" autocomplete="current-password" id="confirmPassword" placeholder="Confirm Password" required="">
               <label for="confirmPassword">Confirm Password</label>
             </div>
               <button type="button" class="input-group-text" id="showConfirmPass"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
@@ -62,15 +65,17 @@ export const registerPage = (csrfToken) => `
         </div>
         <div class="mb-3">
           <label class="option">I agree to the <a href="/tos" target="_NEW">Terms and Conditions</a>
-            <input type="checkbox" required>
+            <input type="checkbox" required="">
             <span class="checkmark"></span>
           </label>
         </div>
-        <input type="hidden" id="csrfToken" value="${csrfToken}" />
+        <input type="hidden" id="csrfToken" value="${csrfToken}">
           <button type="submit" class="btn btn-primary btn-small" name="register">Register</button>
           <div id="liveAlertPlaceholder"></div>
       </form>
-    </div>`;
+    </div>
+  </div>
+</div>`;
 
 export const javaScript = (nonce) => `<script nonce="${nonce}">
 

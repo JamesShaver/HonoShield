@@ -1,10 +1,10 @@
-export const layout = (title, content, loggedIn, javascript = '') => `<!doctype html>
+export const layout = (content) => `<!doctype html>
 <html lang="en" class="h-100">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="James Shaver, and HonoShield contributors">
-    <title>${title}</title>
+    <title>${content.title}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/flatly/bootstrap.min.css" integrity="sha512-qoT4KwnRpAQ9uczPsw7GunsNmhRnYwSlE2KRCUPRQHSkDuLulCtDXuC2P/P6oqr3M5hoGagUG9pgHDPkD2zCDA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="canonical" href="https://honoshield.cdndev.io/">
     <link href="/assets/css/style.css" rel="stylesheet" />
@@ -23,12 +23,41 @@ export const layout = (title, content, loggedIn, javascript = '') => `<!doctype 
                   <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
                   <li><a href="/contact" class="nav-link px-2 text-white">Contact</a></li>
               </ul>
-              <div class="text-end"> ${loggedIn} </div>
+              <div class="text-end">  
+              ${content.username ? `
+                <div class="flex-shrink-0 dropdown">
+                  <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">            
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 60 60" enable-background="new 0 0 60 60" xml:space="preserve">
+                      <path fill="#CCCCCC" d="M48.35,50.783l0.254,0.305c-4.997,4.488-11.608,7.222-18.842,7.222s-13.833-2.721-18.83-7.196l0.28-0.331
+                        c0,0,3.293-2.619,7.171-3.585c3.878-0.966,5.632-3.687,5.632-3.687v-4.755c0,0-2.823-3.776-2.428-6.395c0,0-3.496-2.327-1.068-5.721
+                        c0,0-5.62-16.134,8.633-16.299c3.611-0.038,5.403,2.708,5.403,2.708c9.65-0.966,4.488,13.591,4.488,13.591
+                        c2.428,3.395-1.068,5.721-1.068,5.721c0.394,2.619-2.428,6.395-2.428,6.395v4.755c0,0,1.755,2.721,5.632,3.687
+                        C45.057,48.164,48.35,50.783,48.35,50.783z"></path>
+                      <path fill="none" stroke="#CCCCCC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+                        M48.35,50.783c0,0-3.293-2.619-7.171-3.585c-3.878-0.966-5.632-3.687-5.632-3.687v-4.755c0,0,2.823-3.776,2.428-6.395
+                        c0,0,3.496-2.327,1.068-5.721c0,0,5.162-14.558-4.488-13.591c0,0-1.793-2.746-5.403-2.708c-14.253,0.165-8.633,16.299-8.633,16.299
+                        c-2.428,3.395,1.068,5.721,1.068,5.721c-0.394,2.619,2.428,6.395,2.428,6.395v4.755c0,0-1.755,2.721-5.632,3.687
+                        c-3.878,0.966-7.171,3.585-7.171,3.585"></path>
+                      <path fill="none" stroke="#999999" stroke-width="3" stroke-miterlimit="10" d="M10.932,51.113
+                        C5.16,45.939,1.524,38.425,1.524,30.071c0-15.6,12.638-28.238,28.238-28.238C45.349,1.833,58,14.471,58,30.071
+                        c0,8.353-3.624,15.854-9.396,21.016c-4.997,4.488-11.608,7.222-18.842,7.222S15.929,55.589,10.932,51.113z"></path>
+                      </svg>
+                  </a>
+                  <ul class="dropdown-menu text-small shadow">
+                    <li><a class="dropdown-item" href="/profile/dashboard">Dashboard</a></li>
+                    <li><a class="dropdown-item" href="/profile/settings">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/auth/logout">Sign out</a></li>
+                  </ul>
+                </div>`
+          : `<a href="/auth/login" type="button" class="btn btn-outline-light me-2">Login</a>
+              <a href="/auth/register" type="button" class="btn btn-warning">Register</a>`}
             </div>
+          </div>
         </div>
     </header>
     <main class="flex-shrink-0">
-    ${content}
+    ${content.page}
     </main>
     <footer class="mt-auto bg-body-tertiary">
               <div class="d-flex flex-wrap justify-content-between align-items-center my-4 px-2">
@@ -51,6 +80,6 @@ export const layout = (title, content, loggedIn, javascript = '') => `<!doctype 
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    ${javascript}
+    ${content.javascript}
   </body>
 </html>`;
