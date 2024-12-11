@@ -5,9 +5,8 @@ export const layout = (content) => `<!doctype html>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="James Shaver, and HonoShield contributors">
     <title>${content.title}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/flatly/bootstrap.min.css" integrity="sha512-qoT4KwnRpAQ9uczPsw7GunsNmhRnYwSlE2KRCUPRQHSkDuLulCtDXuC2P/P6oqr3M5hoGagUG9pgHDPkD2zCDA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="canonical" href="https://honoshield.cdndev.io/">
-    <link href="/assets/css/style.css" rel="stylesheet" />
+    <link href="/assets/compiled/css/styles.min.css" rel="stylesheet" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
