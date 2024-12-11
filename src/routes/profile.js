@@ -31,6 +31,8 @@ profileRoutes.use('/*', authRequired);
 
 profileRoutes.get('/dashboard', async (c) => {
 
+    let username = c.get('username');
+
     let userRecord;
     try {
         userRecord = await c.env.DB.prepare("SELECT * FROM users WHERE username = ?")
