@@ -106,6 +106,76 @@ The custom 404 middleware handles all unmatched routes and displays a friendly e
         return c.html(layout('Error', error404Page()), 404);
     });
 
+
+﻿
+``## Asset Compilation with Gulp
+
+This project uses Gulp for managing and optimizing frontend assets such as JavaScript, CSS, and fonts. The configuration for Gulp is defined in `gulpfile.js`, and the following sections outline the setup and usage.
+
+### Features
+- **JavaScript Bundling and Minification**: Combines and compresses JavaScript files into a single `bundle.min.js`.
+- **CSS Concatenation and Minification**: Merges CSS files and minimizes them into `styles.min.css`.
+- **Font Copying**: Copies font files into the appropriate directory for deployment.
+
+### Gulp Tasks
+
+1. **JavaScript Task**: Combines and minifies JavaScript files from dependencies and custom scripts.
+2. **CSS Task**: Merges and minifies stylesheets, including third-party themes and custom CSS.
+3. **Font Task**: Copies font files (such as those from Bootstrap Icons) to the compiled assets directory.
+
+### File Structure
+The following directories are expected in your project:
+- **Source Directories**:
+ - `node_modules`: For dependencies such as Bootstrap, Bootswatch, and Bootstrap Icons.
+ - `public/assets/css`: Custom CSS stylesheets.
+- **Output Directories**:
+ - `public/assets/compiled/js`: For the minified JavaScript bundle.
+ - `public/assets/compiled/css`: For the minified CSS bundle.
+ - `public/assets/compiled/css/fonts`: For font files.
+
+### Installation and Setup
+
+1. **Install Dependencies**  
+   Run the following command to install required dependencies:
+   ```bash
+   npm install gulp gulp-concat gulp-uglify gulp-clean-css`` 
+
+2.  **Define Source Files**  
+    Update the arrays in `gulpfile.js` to include your specific JavaScript, CSS, and font file paths if needed.
+    
+3.  **Run Gulp Tasks**
+    
+    -   To run all tasks (JavaScript, CSS, and fonts), execute:       
+        `gulp` 
+        
+    -   To run specific tasks:
+    - `gulp js`
+    - `gulp css`
+    - `gulp fonts` 
+        
+4.  **Customize Output**  
+    Modify the output directories in the `gulp.dest()` calls if your project structure requires different locations.
+    
+
+### Example Integration
+
+After running the Gulp tasks, link the compiled assets in your HTML:
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <link rel="stylesheet" href="/assets/compiled/css/styles.min.css">
+    </head>
+    <body>
+      <script src="/assets/compiled/js/bundle.min.js"></script>
+    </body>
+    </html>
+
+### Notes
+
+-   Ensure the `node_modules` folder is not included in your deployment build if it's not required at runtime.
+-   The `public/assets/compiled` directory should be added to your `.gitignore` to prevent committing generated files.
+
 ## Future Improvements
 
 -   **Add multi-factor authentication (MFA)** for improved security.
