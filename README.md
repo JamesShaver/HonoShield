@@ -107,8 +107,7 @@ The custom 404 middleware handles all unmatched routes and displays a friendly e
     });
 
 
-﻿
-``## Asset Compilation with Gulp
+## Asset Compilation with Gulp
 
 This project uses Gulp for managing and optimizing frontend assets such as JavaScript, CSS, and fonts. The configuration for Gulp is defined in `gulpfile.js`, and the following sections outline the setup and usage.
 
