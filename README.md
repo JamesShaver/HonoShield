@@ -75,16 +75,15 @@ updated_on datetime  default current_timestamp
 ## Installation and Setup
 
 1.  **Clone the Repository**:
-`git clone https://github.com/JamesShaver/HonoShield.git`
-`cd hono-web-app`
+* `git clone https://github.com/JamesShaver/HonoShield.git`
+* `cd hono-web-app`
 
 2.  **Install Dependencies**:
-`npm install`
+* `npm install`
 
 3. Create the secrets needed for MailGun and CSRF protection:
-
-`npx wrangler secret put MAILGUN_KEY`
-`npx wrangler secret put CSRF_Password`
+* `npx wrangler secret put MAILGUN_KEY`
+* `npx wrangler secret put CSRF_Password`
 
 ## Usage  
 
