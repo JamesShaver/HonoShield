@@ -11,37 +11,22 @@ This project is a web application built using [Hono](https://hono.dev/), a minim
 
 ## Features
 
--  **User Authentication**:
-
-- Authentication is handled through a D1 database with a users table.
-
-- Passwords are securely stored using `bcryptjs`.
-
--  **Session Management**:
-
-- Secure session IDs generated using `Nano ID` and stored in Cloudflare Workers KV.
-
--  **Protected Routes**:
-
-- Middleware ensures authentication for accessing sensitive routes.
-
--  **User Registration**:
-
-- New user registration functionality with unique usernames.
-
--  **Email Verification**:
-
-- New account registrations trigger an email verification using the Mailgun API.
-
--  **Logout Functionality**:
-
-- Clears sessions and removes cookies upon logout.
-
--  **Custom 404 Page**:
-
-- Custom 404 error handling for unmatched routes.
-
-  
+* **User Authentication**:
+	* Authentication is handled through a D1 database with a users table.
+	* Passwords are securely stored using `bcryptjs`.
+* **Session Management**:
+	* Secure session IDs generated using `Nano ID` and stored in Cloudflare Workers KV.
+* **Protected Routes**:
+	* Middleware ensures authentication for accessing sensitive routes.
+* **User Registration**:
+	* New user registration functionality with unique usernames.
+*  **Email Verification**:
+	* New account registrations trigger an email verification using the Mailgun API.
+*  **Logout Functionality**:
+	* Clears sessions and removes cookies upon logout.
+*  **Custom 404 Page**:
+	* Custom 404 error handling for unmatched routes.
+ 
 
 ## Technologies Used
 
