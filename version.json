@@ -1,9 +1,0 @@
-{
-    "version": "1.0.3",
-    "build_date": "2024-12-06T12:35:56Z",
-    "author": "James Shaver",
-    "features": [
-      "Improved cookie management",
-      "Updated users table to include more columns"
-    ]
-  }
