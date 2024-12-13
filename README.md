@@ -147,19 +147,15 @@ This project uses Gulp for managing and optimizing frontend assets such as JavaS
 
 The following directories are expected in your project:
 
--  **Source Directories**:
+* **Source Directories**:
+	*  `node_modules`: For dependencies such as Bootstrap, Bootswatch, and Bootstrap Icons.
+	*  `public/assets/css`: Custom CSS stylesheets.
 
--  `node_modules`: For dependencies such as Bootstrap, Bootswatch, and Bootstrap Icons.
-
--  `public/assets/css`: Custom CSS stylesheets.
-
--  **Output Directories**:
-
--  `public/assets/compiled/js`: For the minified JavaScript bundle.
--  `public/assets/compiled/css`: For the minified CSS bundle.
--  `public/assets/compiled/css/fonts`: For font files.
+*  **Output Directories**:
+	*  `public/assets/compiled/js`: For the minified JavaScript bundle.
+	*  `public/assets/compiled/css`: For the minified CSS bundle.
+	*  `public/assets/compiled/css/fonts`: For font files.
   
-
 ### Installation and Setup
 
 1.  **Define Source Files**
