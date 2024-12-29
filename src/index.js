@@ -6,8 +6,6 @@ import profileRoutes from './routes/profile';
 import authRoutes from './routes/authentication';
 import publicRoutes from './routes/public';
 
-import { getLoggedInHeader } from './utilities/authUtilities';
-
 import { layout } from './layout';
 import { error404Page } from './errors/404';
 

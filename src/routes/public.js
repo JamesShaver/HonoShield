@@ -1,7 +1,6 @@
 import { Hono } from 'hono';
 import { layout } from '../layout';
 import { getCookie } from 'hono/cookie';
-import { getLoggedInHeader } from '../utilities/authUtilities';
 
 const publicRoutes = new Hono();
 

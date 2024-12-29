@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { getCookie } from 'hono/cookie';
-import { getLoggedInHeader, getOrCreateCSRFToken } from '../utilities/authUtilities';
+import { getOrCreateCSRFToken } from '../utilities/authUtilities';
 import { deXSS, saneAndValidCommon, saneAndValidKey } from '../utilities/validate';
 
 
