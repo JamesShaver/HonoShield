@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import bcrypt from 'bcryptjs';
 import { getCookie, setCookie } from 'hono/cookie';
 import { deXSS, saneAndValidCommon, saneAndValidKey } from '../utilities/validate';
-import { getLoggedInHeader, getOrCreateCSRFToken } from '../utilities/authUtilities';
+import { getOrCreateCSRFToken } from '../utilities/authUtilities';
 import { userActivation } from '../utilities/mailUtilities';
 import { layout } from '../layout';
 
