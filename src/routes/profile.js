@@ -6,7 +6,6 @@ import { layout } from '../layout';
 
 const profileRoutes = new Hono();
 
-
 profileRoutes.use('/*', authRequired);
 
 profileRoutes.get('/dashboard', async (c) => {
