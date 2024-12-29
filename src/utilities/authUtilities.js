@@ -21,3 +21,19 @@ export function getOrCreateCSRFToken(c) {
 
   return CSRF_Token;
 }
+
+export function authRequired (c) {
+  const sessionId = getCookie(c, 'session_id');
+
+  if (!sessionId) {
+      return false;
+  }
+
+  const session = c.env.KV_SESSIONS && sessionId ? c.env.KV_SESSIONS.get(sessionId) : null;
+  if (!session) {
+      return false;
+  } else {
+      return true;
+  } 
+
+};
