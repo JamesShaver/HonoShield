@@ -23,7 +23,7 @@ export const layout = (content) => `<!doctype html>
                   <li><a href="/contact" class="nav-link px-2 text-white">Contact</a></li>
               </ul>
               <div class="text-end">  
-              ${content.username ? `
+              ${content.username != 'Guest' ? `
                 <div class="flex-shrink-0 dropdown">
                   <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">            
                     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 60 60" enable-background="new 0 0 60 60" xml:space="preserve">

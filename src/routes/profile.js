@@ -1,37 +1,16 @@
 import { Hono } from 'hono';
-import { getCookie } from 'hono/cookie';
-import { getOrCreateCSRFToken } from '../utilities/authUtilities';
+import { authRequired, getOrCreateCSRFToken } from '../utilities/authUtilities';
 import { deXSS, saneAndValidCommon, saneAndValidKey } from '../utilities/validate';
-
 
 import { layout } from '../layout';
 
-
 const profileRoutes = new Hono();
-
-// Middleware for authentication check
-const authRequired = async (c, next) => {
-    const sessionId = getCookie(c, 'session_id');
-
-    if (!sessionId) {
-        return c.redirect('/auth/login');
-    }
-
-    const session = c.env.KV_SESSIONS && sessionId ? await c.env.KV_SESSIONS.get(sessionId) : null;
-    if (!session) {
-        return c.redirect('/auth/login');
-    }
-
-    c.set('username', JSON.parse(session).username);
-    await next();
-};
-
 
 profileRoutes.use('/*', authRequired);
 
 profileRoutes.get('/dashboard', async (c) => {
 
-    let username = c.get('username');
+    let username = c.get('username') ?? null;
 
     let userRecord;
     try {

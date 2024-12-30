@@ -9,6 +9,8 @@ import publicRoutes from './routes/public';
 import { layout } from './layout';
 import { error404Page } from './errors/404';
 
+import { getUsername } from './utilities/authUtilities';
+
 const app = new Hono();
 
 app.use('*', async (c, next) => {
@@ -42,6 +44,7 @@ app.use('*', async (c, next) => {
             except()
         )
     )(c, async () => {
+        c.set('username', await getUsername(c));
         await next();
     });
 });

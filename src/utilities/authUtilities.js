@@ -1,4 +1,5 @@
 import { createHash } from 'crypto';
+import { getCookie } from 'hono/cookie';
 
 // Function that checks if a CSRF token exists and, if it’s expired or missing, creates a new token
 export function getOrCreateCSRFToken(c) {
@@ -21,3 +22,35 @@ export function getOrCreateCSRFToken(c) {
 
   return CSRF_Token;
 }
+
+export const authRequired = async (c, next) => {
+    const sessionId = getCookie(c, 'session_id');
+
+    if (!sessionId) {
+        return c.redirect('/auth/login');
+    }
+
+    const session = c.env.KV_SESSIONS && sessionId ? await c.env.KV_SESSIONS.get(sessionId) : null;
+    if (!session) {
+        return c.redirect('/auth/login');
+    }
+
+    await next();
+};
+
+
+export const getUsername = async (c) => {
+  const sessionId = getCookie(c, 'session_id');
+
+  if (!sessionId) {
+      return 'Guest';
+  }
+
+  const session = c.env.KV_SESSIONS && sessionId ? await c.env.KV_SESSIONS.get(sessionId) : null;
+  if (!session) {
+      return 'Guest';
+  } else {
+    return JSON.parse(session).username;
+  }
+
+};

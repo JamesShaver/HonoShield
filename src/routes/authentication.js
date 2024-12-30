@@ -32,13 +32,14 @@ async function validateCSRF(c, csrfToken) {
 
 // Login Route
 authRoutes.get('/login', async (c) => {
-    if(c.get('username') != null) c.redirect('/auth/logout');
+    if(c.get('username') != 'Guest') c.redirect('/auth/logout');
 
     const csrfToken = getOrCreateCSRFToken(c);
     const { loginPage, javaScript } = await import('../pages/authentication/login');
 
     const nonce=c.get('secureHeadersNonce');
     let content = {
+        username: c.get('username') ?? null,
         title: 'Login',
         page: loginPage(),
         javascript: javaScript(csrfToken, nonce)
@@ -47,12 +48,13 @@ authRoutes.get('/login', async (c) => {
 });
 
 authRoutes.get('/register', async (c) => {
-    if(c.get('username') != null) c.redirect('/auth/logout');
+    if(c.get('username') != 'Guest') c.redirect('/auth/logout');
 
     const csrfToken = getOrCreateCSRFToken(c);
     const { registerPage, javaScript } = await import('../pages/authentication/register');
     const nonce=c.get('secureHeadersNonce');
     let content = {
+        username: c.get('username') ?? null,
         title: 'Register',
         page: registerPage(),
         javascript: javaScript(csrfToken, nonce)
@@ -65,6 +67,7 @@ authRoutes.get("/activate-user", async (c) => {
 
     const { activatePage, javaScript } = await import('../pages/authentication/activate');
     let content = {
+        username: c.get('username') ?? null,
         title: 'Activate Account',
         page: activatePage(),
         javascript: javaScript(csrfToken, nonce)
@@ -165,7 +168,6 @@ authRoutes.post('/api/login', async (c) => {
           }
     }
 
-    c.set('username', userRecord.username);
     return c.json({ success: true, message: 'Logged in' });
 });
 

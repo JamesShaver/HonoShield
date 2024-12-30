@@ -1,30 +1,6 @@
 import { Hono } from 'hono';
 import { layout } from '../layout';
-import { getCookie } from 'hono/cookie';
-
 const publicRoutes = new Hono();
-
-
-publicRoutes.use('*', async (c, next) => {
-    let user;
-    let session;
-    const sessionId = getCookie(c, 'session_id');
-
-    if (sessionId) {
-        try {
-            session = c.env.KV_SESSIONS && sessionId ? await c.env.KV_SESSIONS.get(sessionId) : null;
-            if (session != null) {
-                c.set('username', JSON.parse(session).username);
-            } else {
-                c.set('username', null)
-            }
-        } catch (error) {
-            console.error('Error parsing session:', error);
-            c.set('username', user);
-        }
-    }
-    await next();
-});
 
 
 // Home
