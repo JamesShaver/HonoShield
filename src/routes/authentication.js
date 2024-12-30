@@ -144,7 +144,6 @@ authRoutes.post('/api/login', async (c) => {
           secure: true,
           sameSite: 'Lax',
         });
-        console.log(c.res.headers); // Debug headers
       } catch (error) {
         console.error('Error setting cookie:', error);
         return c.json({ message: 'Failed to set cookie' }, 500);
