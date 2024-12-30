@@ -10,7 +10,7 @@ profileRoutes.use('/*', authRequired);
 
 profileRoutes.get('/dashboard', async (c) => {
 
-    let username = c.get('username');
+    let username = c.get('username') ?? null;
 
     let userRecord;
     try {
