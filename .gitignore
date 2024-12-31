@@ -1,6 +1,7 @@
 # prod
 dist/
 public/assets/compiled
+tag.sh
 
 # dev
 .yarn/
