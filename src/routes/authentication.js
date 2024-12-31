@@ -7,10 +7,6 @@ import { getOrCreateCSRFToken } from '../utilities/authUtilities';
 import { userActivation } from '../utilities/mailUtilities';
 import { layout } from '../layout';
 
-const generateSessionId = () => nanoid(32);
-const generateToken = () => nanoid(64);
-const generateSecretKey = () => nanoid(32);
-
 const authRoutes = new Hono();
 
 async function validateCSRF(c, csrfToken) {
@@ -128,7 +124,7 @@ authRoutes.post('/api/login', async (c) => {
     }
 
     // Generate session ID and store the session in KV
-    const sessionId = generateSessionId();
+    const sessionId = nanoid(32);
     if (!sessionId) {
         return c.json({ message: 'could not create session' }, 401);
     }
@@ -138,7 +134,7 @@ authRoutes.post('/api/login', async (c) => {
     await c.env.KV_SESSIONS.put(sessionId, JSON.stringify(session), { expirationTtl: c.env.SESSION.EXPIRY });
 
     try {
-        await setCookie(c, 'session_id', sessionId, {
+        setCookie(c, 'session_id', sessionId, {
           maxAge: 3600,
           httpOnly: true,
           secure: true,
@@ -150,11 +146,11 @@ authRoutes.post('/api/login', async (c) => {
       }
 
     if (rememberMe === 'on') {
-        const rememberToken = generateToken();
+        const rememberToken = nanoid(32);
         await c.env.REMEMBER_TOKENS.put(`remember_${rememberToken}`, userId, { expirationTtl: 30 * 24 * c.env.SESSION.EXPIRY });
 
         try {
-            await setCookie(c, 'remember_me', rememberToken, {
+            setCookie(c, 'remember_me', rememberToken, {
               maxAge: 30 * 24 * c.env.SESSION.EXPIRY,
               httpOnly: true,
               secure: true,
@@ -193,7 +189,7 @@ authRoutes.post("/api/register", async (c) => {
     } else {
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const secret_key = generateSecretKey();
+        const secret_key = nanoid(32);
 
         const stmt = c.env.DB.prepare("INSERT INTO users (firstName, lastName, company, username, password, status, secret_key) VALUES (?, ?, ?, ?, ?, ?, ?)");
         await stmt.bind(userKey, hashedPassword, 0, secret_key).run();
