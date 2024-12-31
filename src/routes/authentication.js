@@ -28,12 +28,12 @@ async function validateCSRF(c, csrfToken) {
 
 // Login Route
 authRoutes.get('/login', async (c) => {
-    if(c.get('username') != 'Guest') c.redirect('/auth/logout');
+    if (c.get('username') != 'Guest') c.redirect('/auth/logout');
 
     const csrfToken = getOrCreateCSRFToken(c);
     const { loginPage, javaScript } = await import('../pages/authentication/login');
 
-    const nonce=c.get('secureHeadersNonce');
+    const nonce = c.get('secureHeadersNonce');
     let content = {
         username: c.get('username') ?? null,
         title: 'Login',
@@ -44,11 +44,11 @@ authRoutes.get('/login', async (c) => {
 });
 
 authRoutes.get('/register', async (c) => {
-    if(c.get('username') != 'Guest') c.redirect('/auth/logout');
+    if (c.get('username') != 'Guest') c.redirect('/auth/logout');
 
     const csrfToken = getOrCreateCSRFToken(c);
     const { registerPage, javaScript } = await import('../pages/authentication/register');
-    const nonce=c.get('secureHeadersNonce');
+    const nonce = c.get('secureHeadersNonce');
     let content = {
         username: c.get('username') ?? null,
         title: 'Register',
@@ -135,15 +135,15 @@ authRoutes.post('/api/login', async (c) => {
 
     try {
         setCookie(c, 'session_id', sessionId, {
-          maxAge: 3600,
-          httpOnly: true,
-          secure: true,
-          sameSite: 'Lax',
+            maxAge: 3600,
+            httpOnly: true,
+            secure: true,
+            sameSite: 'Lax',
         });
-      } catch (error) {
+    } catch (error) {
         console.error('Error setting cookie:', error);
         return c.json({ message: 'Failed to set cookie' }, 500);
-      }
+    }
 
     if (rememberMe === 'on') {
         const rememberToken = nanoid(32);
@@ -151,16 +151,16 @@ authRoutes.post('/api/login', async (c) => {
 
         try {
             setCookie(c, 'remember_me', rememberToken, {
-              maxAge: 30 * 24 * c.env.SESSION.EXPIRY,
-              httpOnly: true,
-              secure: true,
-              sameSite: 'Lax',
+                maxAge: 30 * 24 * c.env.SESSION.EXPIRY,
+                httpOnly: true,
+                secure: true,
+                sameSite: 'Lax',
             });
             console.log('Remember Cookie set successfully');
-          } catch (error) {
+        } catch (error) {
             console.error('Error setting remember cookie:', error);
             return c.json({ message: 'Failed to set remember cookie' }, 500);
-          }
+        }
     }
 
     return c.json({ success: true, message: 'Logged in' });
@@ -169,7 +169,11 @@ authRoutes.post('/api/login', async (c) => {
 
 // Register endpoint
 authRoutes.post("/api/register", async (c) => {
-    const { firstname, lastname, company, email, password } = await c.req.json();
+    const { firstname, lastname, company, email, password, csrfToken } = await c.req.json();
+
+    if (!firstname || !lastname || !company || !email || !password || !csrfToken) {
+        return c.json({ message: 'All fields are required' }, 400);
+    }
 
     if (
         !saneAndValidCommon(firstname) ||
@@ -178,6 +182,12 @@ authRoutes.post("/api/register", async (c) => {
         !saneAndValidCommon(email) ||
         !saneAndValidCommon(password)
     ) return c.json({ message: "Invalid input" }, 400);
+
+    const isValidCSRF = validateCSRF(c, csrfToken);
+
+    if (!isValidCSRF) {
+        return c.json({ message: 'Invalid or expired CSRF token' }, 403);
+    }
 
     const userKey = `${deXSS(email)}`;
     const existingUser = await c.env.DB.prepare("SELECT * FROM users WHERE username = ?")

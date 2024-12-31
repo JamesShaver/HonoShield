@@ -69,7 +69,6 @@ export const registerPage = (csrfToken) => `
             <span class="checkmark"></span>
           </label>
         </div>
-        <input type="hidden" id="csrfToken" value="${csrfToken}">
           <button type="submit" class="btn btn-primary btn-small" name="register">Register</button>
           <div id="liveAlertPlaceholder"></div>
       </form>
@@ -77,7 +76,7 @@ export const registerPage = (csrfToken) => `
   </div>
 </div>`;
 
-export const javaScript = (nonce) => `<script nonce="${nonce}">
+export const javaScript = (csrfToken, nonce) => `<script nonce="${nonce}">
 
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 const appendAlert = (message, type) => {
@@ -97,10 +96,11 @@ const appendAlert = (message, type) => {
 }
 
 async function register(firstname, lastname, company, email, password) {
+    const csrfToken = "${csrfToken}";
     const response = await fetch("/auth/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ firstname, lastname, company, email, password }),
+      body: JSON.stringify({ firstname, lastname, company, email, password, csrfToken }),
       credentials: "include",
     });
     return response.json();
