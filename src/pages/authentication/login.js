@@ -68,6 +68,7 @@ async function login(username, password, rememberMe) {
     });
     return response.json();
 }
+    
 
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
