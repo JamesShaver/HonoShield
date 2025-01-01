@@ -8,6 +8,7 @@ export const layout = (content) => `<!doctype html>
     <meta name="keywords" content="Hono framework, Cloudflare Workers, D1 database, KV storage, user authentication, session management, bcryptjs, Nano ID, Mailgun API, CSRF protection, secure web application, email verification, custom 404 page, modular routes, middleware" />
     <title>${content.title}</title>
     <link rel="canonical" href="https://honoshield.cdndev.io/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="/assets/compiled/css/styles.min.css" rel="stylesheet" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">

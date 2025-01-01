@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import bcrypt from 'bcryptjs';
 import { getCookie, setCookie } from 'hono/cookie';
 import { deXSS, saneAndValidCommon, saneAndValidKey } from '../utilities/validate';
-import { getOrCreateCSRFToken } from '../utilities/authUtilities';
+import { rateLimit, getOrCreateCSRFToken } from '../utilities/authUtilities';
 import { userActivation } from '../utilities/mailUtilities';
 import { layout } from '../layout';
 
@@ -89,6 +89,8 @@ authRoutes.get('/logout', async (c) => {
     return c.redirect('/');
 });
 
+// Middleware to rate limit login attempts to 5 per minute per IP address
+authRoutes.use('/api/login', (c, next) => rateLimitMiddleware(c.env, 5, 60)(c, next));
 authRoutes.post('/api/login', async (c) => {
     const { username, password, csrfToken, rememberMe } = await c.req.json();
 
