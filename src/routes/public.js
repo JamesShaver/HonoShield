@@ -39,7 +39,9 @@ publicRoutes.get('/tos', async (c) => {
     let content = {
         title: 'Home',
         username: c.get('username')  ?? null,
-        page: tosPage()
+        page: tosPage(),
+        javascript: ''
+
     }
     return c.html(layout(content));
 });
