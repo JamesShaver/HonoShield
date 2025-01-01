@@ -1,4 +1,5 @@
 import { Hono } from 'hono';
+import { etag } from 'hono/etag'
 import { cache } from 'hono/cache'
 import { some, every, except } from 'hono/combine';
 import { secureHeaders, NONCE } from 'hono/secure-headers';
@@ -17,6 +18,7 @@ const app = new Hono();
 app.use('*', async (c, next) => {
     await some(
         every(
+            etag(),
             cache({
                 cacheName: 'honoshield-cache',
                 cacheControl: 'max-age=3600',
