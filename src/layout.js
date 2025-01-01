@@ -4,6 +4,8 @@ export const layout = (content) => `<!doctype html>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="James Shaver, and HonoShield contributors">
+    <meta name="description" content="A secure and modular web application built with the Hono framework for Cloudflare Workers. Features include user authentication with D1 database, session management using KV storage, CSRF protection, email verification via Mailgun API, and custom 404 handling. Technologies like bcryptjs and Nano ID ensure robust security and scalability." />
+    <meta name="keywords" content="Hono framework, Cloudflare Workers, D1 database, KV storage, user authentication, session management, bcryptjs, Nano ID, Mailgun API, CSRF protection, secure web application, email verification, custom 404 page, modular routes, middleware" />
     <title>${content.title}</title>
     <link rel="canonical" href="https://honoshield.cdndev.io/">
     <link href="/assets/compiled/css/styles.min.css" rel="stylesheet" />
