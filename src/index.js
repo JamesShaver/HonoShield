@@ -1,4 +1,5 @@
 import { Hono } from 'hono';
+import { cache } from 'hono/cache'
 import { some, every, except } from 'hono/combine';
 import { secureHeaders, NONCE } from 'hono/secure-headers';
 
@@ -16,6 +17,10 @@ const app = new Hono();
 app.use('*', async (c, next) => {
     await some(
         every(
+            cache({
+                cacheName: 'honoshield-cache',
+                cacheControl: 'max-age=3600',
+              }),
             secureHeaders({
                 contentSecurityPolicy: {
                     defaultSrc: ['self', 'honoshield.cdndev.io', 'cdnjs.cloudflare.com', 'cdn.jsdelivr.net'],
