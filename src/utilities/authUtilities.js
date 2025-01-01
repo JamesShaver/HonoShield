@@ -56,7 +56,7 @@ export const getUsername = async (c) => {
 };
 
 // Rate limiting middleware that uses the client's IP address to track requests and limit them
-const rateLimit = (env, maxRequests, timeWindow) => {
+export const rateLimit = (env, maxRequests, timeWindow) => {
   return async (c, next) => {
     const ipAddr = c.req.headers.get('CF-Connecting-IP') || c.req.headers.get('X-Forwarded-For') || c.req.headers.get('Remote-Addr')
     const key = `rate_limit_${ipAddr}`

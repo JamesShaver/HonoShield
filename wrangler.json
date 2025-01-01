@@ -30,6 +30,10 @@
         {
             "binding": "REMEMBER_TOKENS",
             "id": "b2f3b52f0fed49bb8717bcf393efbbab"
+        },
+        {
+            "binding": "RATE_LIMIT_KV",
+            "id": "bcac13d535d842738a223c382c7900a2"
         }
     ],
     "d1_databases": [
