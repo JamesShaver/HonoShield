@@ -3,11 +3,60 @@ import { nanoid } from 'nanoid';
 import bcrypt from 'bcryptjs';
 import { getCookie, setCookie } from 'hono/cookie';
 import { deXSS, saneAndValidCommon, saneAndValidKey } from '../utilities/validate';
-import { rateLimit, getOrCreateCSRFToken } from '../utilities/authUtilities';
+import { getOrCreateCSRFToken } from '../utilities/authUtilities';
 import { userActivation } from '../utilities/mailUtilities';
 import { layout } from '../layout';
 
 const authRoutes = new Hono();
+
+async function rateLimit(c, maxRequests, timeWindow) {
+    try {
+      console.log('Rate limit function called');
+  
+      const ipAddr = c.req.header('CF-Connecting-IP') || c.req.header('X-Forwarded-For') || c.req.header('Remote-Addr');
+      console.log('Extracted IP Address:', ipAddr);
+  
+      const key = `rate_limit_${ipAddr || 'unknown'}`;
+      console.log('Key:', key);
+  
+      const rateLimitKV = c.env.RATE_LIMIT_KV;
+      if (!rateLimitKV) {
+        throw new Error('RATE_LIMIT_KV is undefined');
+      }
+  
+      console.log('Checking KV for key:', key);
+      let rateLimitData = await rateLimitKV.get(key, { type: 'json' });
+      console.log('Retrieved KV data:', rateLimitData);
+  
+      if (!rateLimitData) {
+        rateLimitData = { count: 0, startTime: Math.floor(Date.now() / 1000) };
+      }
+  
+      const elapsedTime = Math.floor(Date.now() / 1000) - rateLimitData.startTime;
+      if (elapsedTime < timeWindow && rateLimitData.count >= maxRequests) {
+        const retrySecs = timeWindow - elapsedTime;
+        c.header('Retry-After', retrySecs.toString());
+        console.log('Rate limit exceeded. Retry after:', retrySecs);
+        return false;
+      }
+  
+      if (elapsedTime >= timeWindow) {
+        rateLimitData = { count: 1, startTime: Math.floor(Date.now() / 1000) };
+      } else {
+        rateLimitData.count += 1;
+      }
+  
+      console.log('Updated rate limit data:', rateLimitData);
+      await rateLimitKV.put(key, JSON.stringify(rateLimitData), { expirationTtl: timeWindow }); // Added await here
+      console.log('KV record written successfully');
+      return true;
+    } catch (error) {
+      console.error('Rate limit error:', error);
+      return false;
+    }
+  }  
+  
+  
 
 async function validateCSRF(c, csrfToken) {
     // Retrieve the stored CSRF token from KV using the token as the key
@@ -79,19 +128,23 @@ authRoutes.get('/logout', async (c) => {
 
     if (sessionId && c.env.KV_SESSIONS) {
         await c.env.KV_SESSIONS.delete(sessionId);
-        await setCookie(c, 'session_id', '', { maxAge: 0, path: '/' });
+        setCookie(c, 'session_id', '', { maxAge: 0, path: '/' });
     }
 
     if (rememberMeToken && c.env.REMEMBER_TOKENS) {
         await c.env.REMEMBER_TOKENS.delete(`remember_${rememberMeToken}`);
-        await setCookie(c, 'remember_me', '', { maxAge: 0, path: '/' });
+        setCookie(c, 'remember_me', '', { maxAge: 0, path: '/' });
     }
     return c.redirect('/');
 });
 
 // Middleware to rate limit login attempts to 5 per minute per IP address
-authRoutes.use('/api/login', (c, next) => rateLimitMiddleware(c.env, 5, 60)(c, next));
 authRoutes.post('/api/login', async (c) => {
+    const isAllowed = await rateLimit(c, 5, 60);
+
+    if (!isAllowed) {
+        return c.json({ message: 'Too many login attempts. Please try again later.' }, 429)
+    }
     const { username, password, csrfToken, rememberMe } = await c.req.json();
 
     if (!username || !password || !csrfToken) {

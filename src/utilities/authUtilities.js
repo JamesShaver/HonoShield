@@ -56,32 +56,36 @@ export const getUsername = async (c) => {
 };
 
 // Rate limiting middleware that uses the client's IP address to track requests and limit them
-export const rateLimit = (env, maxRequests, timeWindow) => {
-  return async (c, next) => {
-    const ipAddr = c.req.headers.get('CF-Connecting-IP') || c.req.headers.get('X-Forwarded-For') || c.req.headers.get('Remote-Addr')
-    const key = `rate_limit_${ipAddr}`
-    const currentTime = Math.floor(Date.now() / 1000)
-    let rateLimitData = await env.RATE_LIMIT_KV.get(key, { type: 'json' })
+export function rateLimit (c, maxRequests, timeWindow) {
+  const ipAddr = c.req.headers.get('CF-Connecting-IP') || c.req.headers.get('X-Forwarded-For') || c.req.headers.get('Remote-Addr')
+  const key = `rate_limit_${ipAddr}`
+  const currentTime = Math.floor(Date.now() / 1000)
 
-    if (!rateLimitData) {
-      rateLimitData = { count: 0, startTime: currentTime }
-    }
-
-    const elapsedTime = currentTime - rateLimitData.startTime
-
-    if (elapsedTime < timeWindow) {
-      if (rateLimitData.count >= maxRequests) {
-        const retrySecs = timeWindow - elapsedTime
-        c.res.headers.set('Retry-After', retrySecs.toString())
-        return c.text('Too many login attempts. Please try again later.', 429)
-      } else {
-        rateLimitData.count += 1
-      }
-    } else {
-      rateLimitData = { count: 1, startTime: currentTime }
-    }
-
-    await env.RATE_LIMIT_KV.put(key, JSON.stringify(rateLimitData), { expirationTtl: timeWindow })
-    await next()
+  if(!c.env.RATE_LIMIT_KV) {
+    console.error('RATE_LIMIT_KV not defined in the environment');
   }
+  
+  let rateLimitData = c.env.RATE_LIMIT_KV.get(key, { type: 'json' })
+
+  if (!rateLimitData) {
+    rateLimitData = { count: 0, startTime: currentTime }
+  }
+
+  const elapsedTime = currentTime - rateLimitData.startTime
+
+  if (elapsedTime < timeWindow) {
+    if (rateLimitData.count >= maxRequests) {
+      const retrySecs = timeWindow - elapsedTime
+      c.header('Retry-After', retrySecs.toString())
+      return false
+    } else {
+      rateLimitData.count += 1
+    }
+  } else {
+    rateLimitData = { count: 1, startTime: currentTime }
+  }
+
+  c.env.RATE_LIMIT_KV.put(key, JSON.stringify(rateLimitData), { expirationTtl: timeWindow })
+  return true
 }
+
