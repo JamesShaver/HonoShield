@@ -4,7 +4,7 @@ export const homePage = () => `
 <h2 id="overview">Overview</h2>
 <div class="row">
     <div class="col">
-        <p>This project is a web application built using <a href="https://hono.dev/">Hono</a>, a minimal and fast web framework for Cloudflare Workers. The application features secure user authentication through a D1 database and session management with KV storage. The project includes a modular route structure and protection middleware to safeguard sensitive routes. It also supports CSRF protected user registration, login, logout, and profile management functionalities.</p>
+        <p>HonoShield is a web application built using <a href="https://hono.dev/">Hono</a>, a minimal and fast web framework for Cloudflare Workers. The application features secure user authentication through a D1 database and session management with KV storage. The project includes a modular route structure and protection middleware to safeguard sensitive routes. It also supports CSRF protected user registration, login, logout, and profile management functionalities.</p>
     </div>
 </div>
 <div class="row">
@@ -15,6 +15,11 @@ export const homePage = () => `
         <ul>
             <li>Authentication is handled through a D1 database with a users table.</li>
             <li>Passwords are securely stored using <code>bcryptjs</code>.</li>
+        </ul>
+    </li>
+    <li><strong>Brute Force Protection</strong>:
+        <ul>
+            <li>Restricts the number of login attempts a user can make within a specific time frame to slow down attackers.</li>
         </ul>
     </li>
     <li><strong>Session Management</strong>:
