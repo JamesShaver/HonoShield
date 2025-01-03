@@ -3,7 +3,7 @@
 
 
 ## Overview
-This project is a web application built using [Hono](https://hono.dev/), a minimal and fast web framework for Cloudflare Workers. The application features secure user authentication through a D1 database and session management with KV storage. The project includes a modular route structure and protection middleware to safeguard sensitive routes. It also supports CSRF protected user registration, login, logout, and profile management functionalities.
+HonoShield is a web application built using [Hono](https://hono.dev/), a minimal and fast web framework for Cloudflare Workers. The application features secure user authentication through a D1 database and session management with KV storage. The project includes a modular route structure and protection middleware to safeguard sensitive routes. It also supports CSRF protected user registration, login, logout, and profile management functionalities.
 
 ## Features
 * **User Authentication**:
@@ -170,7 +170,7 @@ To enforce a rate limit of 5 login attempts per minute:
 This mechanism helps enhance application security by mitigating the risk of automated attacks while maintaining a smooth user experience for legitimate users.
 
 ## Asset Compilation with Gulp
-This project uses Gulp for managing and optimizing frontend assets such as JavaScript, CSS, and fonts. The configuration for Gulp is defined in `gulpfile.js`, and the following sections outline the setup and usage.
+HonoShield uses Gulp for managing and optimizing frontend assets such as JavaScript, CSS, and fonts. The configuration for Gulp is defined in `gulpfile.js`, and the following sections outline the setup and usage.
 
 ### Features
    * **JavaScript Bundling and Minification**: Combines and compresses JavaScript files into a single `bundle.min.js`.
@@ -228,7 +228,7 @@ After running the Gulp tasks, link the compiled assets in your HTML:
 *  **Expand the use of D1 database** for more comprehensive data management.
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+HonoShield is licensed under the MIT License. See the LICENSE file for details.
 
 ## Contributing
 Contributions are welcome! Feel free to submit issues or pull requests.
