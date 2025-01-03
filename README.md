@@ -153,15 +153,6 @@ To enforce a rate limit of 5 login attempts per minute:
     The `rateLimit` function returns `false` if the limit is exceeded or if an error occurs while accessing KV storage.
     
 
-### Testing Rate Limiting
-1.  Deploy the application:    
-    `npx wrangler deploy` 
-2.  Send multiple login requests to test rate limiting:
-    `curl -X POST https://your-app-url/api/login -d '{"username":"test","password":"test"}'`
-3.  Observe the response:
-    *  Normal responses return `401 Unauthorized`.
-    *  Exceeding the limit returns a `429 Too Many Requests` response.
-
 ### Benefits
 *  Prevents brute force attacks by limiting repeated login attempts.
 *  Uses Cloudflare’s globally distributed KV storage for efficient data management.
