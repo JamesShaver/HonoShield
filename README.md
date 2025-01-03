@@ -126,7 +126,8 @@ The rate limiter is invoked at the beginning of the login route to enforce limit
 ### How It Works
 1.  **IP Address Tracking**:  
     The client’s IP address is extracted from the request headers:
-	`const ipAddr = c.req.header('CF-Connecting-IP') || c.req.header('X-Forwarded-For') || c.req.header('Remote-Addr');`
+	
+```const ipAddr = c.req.header('CF-Connecting-IP') || c.req.header('X-Forwarded-For') || c.req.header('Remote-Addr');```
     
 2.  **Rate Limiting Logic**:
 	-   A unique key is generated for the IP address in the KV store.
