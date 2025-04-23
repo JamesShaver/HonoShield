@@ -25,6 +25,6 @@
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-uglify": "^3.0.2",
-    "wrangler": "^3.99.0"
+    "wrangler": "^4.13.0"
   }
 }
